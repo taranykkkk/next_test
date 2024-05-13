@@ -1,0 +1,18 @@
+.text_editor {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  textarea {
+    border: 1px solid black;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    resize: none;
+    width: 50%;
+  }
+}

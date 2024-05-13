@@ -16,7 +16,10 @@
   }
 }
 
+html,
 body {
+  height: max-content;
+  min-height: 100%;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
