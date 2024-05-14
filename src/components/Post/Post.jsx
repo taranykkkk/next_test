@@ -14,11 +14,6 @@ function Post({ title, short_description, body, image_path }) {
         height={220}
         priority
         alt="Image post"
-        style={{
-          borderRadius: '10px',
-          objectFit: 'contain',
-          margin: 'auto',
-        }}
       />
     </div>
   );

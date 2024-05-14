@@ -1,4 +1,4 @@
-import CreatedPost from '@/components/CreatedPost/CreatedPost';
+import CreatedPost from '@/components/CreatePost/CreatePost';
 
 function CreatedPostPage() {
   return <CreatedPost namePage="Created post" />;

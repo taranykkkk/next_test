@@ -6,7 +6,7 @@ function TextEditor({ value, onChange }) {
       <h3>Text editor</h3>
       <textarea
         defaultValue={value}
-        onChange={(e) => onChange('body', e.target.value)}></textarea>
+        onChange={(e) => onChange(e.target.value)}></textarea>
     </div>
   );
 }

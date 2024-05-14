@@ -1,14 +1,10 @@
 import styles from './InputField.module.scss';
 
-function InputField({ value, onChange, text, postKey }) {
+function InputField({ value, onChange, text, id }) {
   return (
     <div className={styles.input_field}>
-      <label htmlFor={text}>{text}</label>
-      <input
-        id={text}
-        value={value}
-        onChange={(e) => onChange(postKey, e.target.value)}
-      />
+      <label htmlFor={id}>{text}</label>
+      <input id={id} value={value} onChange={(e) => onChange(e.target.value)} />
     </div>
   );
 }

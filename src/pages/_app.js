@@ -5,7 +5,9 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Navigation />
-      <Component {...pageProps} />
+      <main>
+        <Component {...pageProps} />
+      </main>
     </>
   );
 }

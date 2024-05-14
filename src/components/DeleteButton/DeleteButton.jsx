@@ -2,7 +2,6 @@ import styles from './DeleteButton.module.scss';
 
 function DeleteButton({ postId, setPosts }) {
   const handleDeletePost = async (e, id) => {
-    setPosts((prev) => prev.filter((elem) => elem.id !== id));
     e.stopPropagation();
     const res = await fetch(
       `https://test.millionflowers.com.ua/api/posts/${id}`,
@@ -10,6 +9,7 @@ function DeleteButton({ postId, setPosts }) {
         method: 'DELETE',
       },
     );
+    setPosts((prev) => prev.filter((elem) => elem.id !== id));
     const test = res.text();
   };
 

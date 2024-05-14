@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import styles from './CardPost.module.scss';
-import { useRouter } from 'next/router';
 import RedactButton from '../RedactButton/RedactButton';
 import DeleteButton from '../DeleteButton/DeleteButton';
+import Link from 'next/link';
 
 function CardPost({
   title,
@@ -12,22 +12,19 @@ function CardPost({
   id,
   setPosts,
 }) {
-  const router = useRouter();
   return (
-    <div
-      className={styles.card_post}
-      onClick={() => router.push(`/posts/${id}`)}>
+    <div className={styles.card_post}>
       <Image
         src={image_path}
         width={480}
         height={260}
         priority
         alt="Image post"
-        style={{ borderRadius: '10px', objectFit: 'contain' }}
       />
-
       <div className={styles.post_text}>
-        <h3>{title}</h3>
+        <Link href={`/posts/${id}`}>
+          <h3>{title}</h3>
+        </Link>
         <h5>{short_description}</h5>
         <p>{body}</p>
         <RedactButton pathname={`/posts/${id}/redact_post`} />

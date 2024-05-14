@@ -9,11 +9,17 @@ function PostPage({ post }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const res = await fetch(
-    `https://test.millionflowers.com.ua/api/posts/${params.id}`,
-  );
-  const post = await res.json();
+  try {
+    const response = await fetch(
+      `https://test.millionflowers.com.ua/api/posts/${params.id}`,
+    );
+    const post = await response.json();
 
-  return { props: { post } };
+    return { props: { post } };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 }
 export default PostPage;
