@@ -1,10 +1,16 @@
+import { useId } from 'react';
 import styles from './InputField.module.scss';
 
-function InputField({ value, onChange, text, id }) {
+function InputField({ value, onChange, text }) {
+  const inputId = useId();
   return (
     <div className={styles.input_field}>
-      <label htmlFor={id}>{text}</label>
-      <input id={id} value={value} onChange={(e) => onChange(e.target.value)} />
+      <label htmlFor={inputId}>{text}</label>
+      <input
+        id={inputId}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 }
