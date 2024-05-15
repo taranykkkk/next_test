@@ -7,7 +7,6 @@
   outline: none;
   position: relative;
   box-shadow: -2px 8px 15px 0px rgba(0, 0, 0, 0.4);
-  cursor: pointer;
   transition: transform 0.2s ease-out;
 
   &:hover {
@@ -43,5 +42,9 @@
       text-overflow: ellipsis;
       -webkit-line-clamp: 6;
     }
+  }
+  img {
+    border-radius: 10px;
+    object-fit: contain;
   }
 }

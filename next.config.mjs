@@ -4,8 +4,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'test.millionflowers.com.ua',
+        protocol: process.env.PROTOCOL,
+        hostname: process.env.HOSTNAME,
       },
     ],
   },

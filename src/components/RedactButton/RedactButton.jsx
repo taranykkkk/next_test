@@ -4,9 +4,7 @@ import styles from './RedactButton.module.scss';
 function RedactButton({ pathname }) {
   return (
     <Link href={pathname}>
-      <button
-        onClick={(e) => e.stopPropagation()}
-        className={styles.redact_button}>
+      <button className={styles.redact_button}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

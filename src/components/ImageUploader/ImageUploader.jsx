@@ -9,22 +9,22 @@ function ImageUploader({ onChange, redactValue }) {
 
     if (selectedImage) {
       const reader = new FileReader();
+
       reader.onload = () => {
         setImage(reader.result);
-        onChange('image', selectedImage);
+        onChange(selectedImage);
       };
       reader.readAsDataURL(selectedImage);
     }
   };
+
   useEffect(() => {
-    if (!!redactValue) {
-      setImage(redactValue);
-    }
-  }, [redactValue]);
+    setImage(redactValue);
+  }, []);
 
   const handleDeleteImg = () => {
     setImage(null);
-    onChange('image', '');
+    onChange('');
   };
 
   return (
