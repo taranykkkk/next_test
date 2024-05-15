@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 const navBar = [
   { name: 'Home', pathname: '/' },
   { name: 'Posts', pathname: '/posts' },
-  { name: 'Created post', pathname: '/created_post' },
+  { name: 'Create post', pathname: '/create_post' },
 ];
 
 function Navigation() {

@@ -1,12 +1,11 @@
 import ImageUploader from '@/components/ImageUploader/ImageUploader';
-import styles from './CreatePost.module.scss';
-import Title from '@/components/Title/Title';
-import Description from '@/components/Description/Description';
+import styles from './PostForm.module.scss';
 import TextEditor from '@/components/TextEditor/TextEditor';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import InputField from '../InputField/InputField';
 
-function CreatePost({ namePage, redactValue }) {
+function PostForm({ namePage, redactValue }) {
   const [post, setPost] = useState(
     redactValue || {
       title: '',
@@ -24,42 +23,21 @@ function CreatePost({ namePage, redactValue }) {
     };
   };
 
-  // const onSubmit = async () => {
-  //   const formData = new FormData();
-  //   Object.entries(post).forEach(([key, value]) => formData.append(key, value));
-  //   try {
-  //     const response = await fetch(
-  //       `https://test.millionflowers.com.ua/api/posts/`,
-  //       {
-  //         method: 'POST',
-  //         mode: 'cors',
-  //         body: formData,
-  //         headers: {
-  //           Accept: 'application/json',
-  //         },
-  //       },
-  //     );
-  //     const json = await response.json();
-  //     router.push('/posts');
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
-
   const onSubmit = async () => {
     const formData = new FormData();
-    // Object.entries(post).forEach(([key, value]) => formData.append(key, value));
+    const { image, ...otherData } = post;
+    Object.entries(otherData).forEach(([key, value]) =>
+      formData.append(key, value),
+    );
 
-    for (let [key, value] of Object.entries(post)) {
-      if (key === 'image' && typeof value === 'string') {
-        continue;
-      } else {
-        formData.append(key, value);
-      }
+    if (image instanceof File) {
+      formData.append('image', image);
     }
-    const URL = redactValue
-      ? `https://test.millionflowers.com.ua/api/posts/${redactValue.id}?_method=PATCH`
-      : `https://test.millionflowers.com.ua/api/posts/`;
+    if (redactValue) formData.append('_method', 'PATCH');
+
+    const URL = `${process.env.NEXT_PUBLIC_DB_URL}/${
+      redactValue ? redactValue.id : ''
+    }`;
 
     try {
       const response = await fetch(URL, {
@@ -82,21 +60,21 @@ function CreatePost({ namePage, redactValue }) {
       <h1>{namePage}</h1>
 
       <div className={styles.card}>
-        <Title
+        <InputField
           onChange={changePostValue('title')}
           value={post.title}
           text="Title"
-          id="title"
         />
-        <Description
+
+        <InputField
           onChange={changePostValue('short_description')}
           value={post.short_description}
           text="Description"
-          id="description"
         />
+
         <ImageUploader
           onChange={changePostValue('image')}
-          redactValue={post.image}
+          imageValue={post.image}
         />
         <TextEditor onChange={changePostValue('body')} value={post.body} />
       </div>
@@ -107,4 +85,4 @@ function CreatePost({ namePage, redactValue }) {
   );
 }
 
-export default CreatePost;
+export default PostForm;

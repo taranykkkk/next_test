@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './ImageUploader.module.scss';
 
-function ImageUploader({ onChange, redactValue }) {
-  const [image, setImage] = useState(null);
+function ImageUploader({ onChange, imageValue }) {
+  const [image, setImage] = useState(imageValue);
 
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
@@ -17,10 +17,6 @@ function ImageUploader({ onChange, redactValue }) {
       reader.readAsDataURL(selectedImage);
     }
   };
-
-  useEffect(() => {
-    setImage(redactValue);
-  }, []);
 
   const handleDeleteImg = () => {
     setImage(null);
