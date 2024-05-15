@@ -35,7 +35,7 @@ function PostForm({ namePage, redactValue }) {
     }
     if (redactValue) formData.append('_method', 'PATCH');
 
-    const URL = `${process.env.NEXT_PUBLIC_DB_URL}/${
+    const URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${
       redactValue ? redactValue.id : ''
     }`;
 
