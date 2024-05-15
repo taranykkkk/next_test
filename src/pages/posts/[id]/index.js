@@ -11,7 +11,7 @@ function PostPage({ post }) {
 export async function getServerSideProps({ params }) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/${params.id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${params.id}`,
     );
 
     if (response.status === 404) {

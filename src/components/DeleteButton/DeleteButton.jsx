@@ -2,8 +2,7 @@ import styles from './DeleteButton.module.scss';
 
 function DeleteButton({ postId, setPosts }) {
   const handleDeletePost = async (e, id) => {
-    e.stopPropagation();
-    const res = await fetch(`${process.env.NEXT_PUBLIC_DB_URL}/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${id}`, {
       method: 'DELETE',
     });
     setPosts((prev) => prev.filter((elem) => elem.id !== id));

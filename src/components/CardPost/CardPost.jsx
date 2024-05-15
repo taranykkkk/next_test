@@ -19,7 +19,7 @@ function CardPost({
         src={image_path ? image_path : img}
         width={480}
         height={260}
-        alt="Image post"
+        alt={title}
       />
 
       <div className={styles.post_text}>

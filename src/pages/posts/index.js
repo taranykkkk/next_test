@@ -13,7 +13,7 @@ function PostsPage({ postsArray = [], query }) {
     try {
       if (searchValue.length > 0) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_DB_URL}?search=${searchValue}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}?search=${searchValue}`,
         );
 
         const dataPosts = await res.json();
@@ -24,7 +24,6 @@ function PostsPage({ postsArray = [], query }) {
       console.log(error);
     }
   }
-
   return (
     <div className={styles.posts_container}>
       <h1>Posts</h1>
@@ -34,7 +33,9 @@ function PostsPage({ postsArray = [], query }) {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <button onClick={filteredPosts}>Search</button>
+        <button disabled={!searchValue} onClick={filteredPosts}>
+          Search
+        </button>
       </div>
 
       <div className={styles.post_list}>
@@ -47,7 +48,7 @@ function PostsPage({ postsArray = [], query }) {
 }
 export async function getServerSideProps({ query }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_DB_URL}?search=${
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}?search=${
       query.search ? query.search : ''
     }`,
   );
