@@ -1,10 +1,10 @@
 import CardPost from '../CardPost/CardPost';
 
-const PostList = ({ posts = [], setPosts }) => {
+const PostList = ({ posts = [], onDelete }) => {
   return (
     <>
       {posts.map((post) => (
-        <CardPost key={post.id} {...post} setPosts={setPosts} />
+        <CardPost key={post.id} {...post} onDelete={onDelete} />
       ))}
     </>
   );

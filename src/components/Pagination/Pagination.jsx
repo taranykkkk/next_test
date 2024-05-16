@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import styles from './Pagination.module.scss';
 import Link from 'next/link';
 
@@ -8,21 +8,9 @@ const selectOptions = [
   { name: 15, value: '15' },
 ];
 
-const Pagination = ({
-  handleSelect,
-  metaData,
-  currentPage,
-  setCurrentPage,
-}) => {
-  const { per_page, last_page, total } = metaData;
-
-  const handlePrevButton = () => {
-    setCurrentPage((prev) => prev - 1);
-  };
-
-  const handlePagesButton = () => {
-    setCurrentPage((prev) => prev - 1);
-  };
+const Pagination = ({ handleSelect, metaData, metaDataState }) => {
+  const { per_page, last_page } = metaData;
+  const { current_page, total } = metaDataState;
 
   return (
     <div className={styles.pagination_container}>
@@ -30,9 +18,9 @@ const Pagination = ({
 
       <div>
         <Link
-          href={`?page=${currentPage - 1}&per_page=${per_page}`}
-          className={currentPage === 1 ? styles.disabled : ''}
-          onClick={handlePrevButton}>
+          href={`?page=${current_page - 1}&per_page=${per_page}`}
+          // className={current_page === 1 ? styles.disabled : ''}
+          className={classNames({ [styles.disabled]: current_page === 1 })}>
           Prev
         </Link>
 
@@ -41,20 +29,26 @@ const Pagination = ({
             <Link
               key={pageNumber}
               href={`?page=${pageNumber}&per_page=${per_page}`}
-              className={
-                pageNumber === currentPage
-                  ? `${styles.active} ${styles.disabled}`
-                  : ''
-              }
-              onClick={handlePagesButton}>
+              // className={
+              //   pageNumber === current_page
+              //     ? `${styles.active} ${styles.disabled}`
+              //     : ''
+              // }
+              className={classNames({
+                [styles.active]: pageNumber === current_page,
+                [styles.disabled]: pageNumber === current_page,
+              })}>
               {pageNumber}
             </Link>
           ),
         )}
 
         <Link
-          href={`?page=${currentPage + 1}&per_page=${per_page}`}
-          className={currentPage === last_page ? styles.disabled : ''}>
+          href={`?page=${current_page + 1}&per_page=${per_page}`}
+          // className={current_page === last_page ? styles.disabled : ''}
+          className={classNames({
+            [styles.disabled]: current_page === last_page,
+          })}>
           Next
         </Link>
       </div>
