@@ -18,8 +18,7 @@ const Pagination = ({ handleSelect, metaData, metaDataState }) => {
 
       <div>
         <Link
-          href={`?page=${current_page - 1}&per_page=${per_page}`}
-          // className={current_page === 1 ? styles.disabled : ''}
+          href={{ pathname: '', query: { page: current_page - 1, per_page } }}
           className={classNames({ [styles.disabled]: current_page === 1 })}>
           Prev
         </Link>
@@ -28,24 +27,17 @@ const Pagination = ({ handleSelect, metaData, metaDataState }) => {
           (pageNumber) => (
             <Link
               key={pageNumber}
-              href={`?page=${pageNumber}&per_page=${per_page}`}
-              // className={
-              //   pageNumber === current_page
-              //     ? `${styles.active} ${styles.disabled}`
-              //     : ''
-              // }
-              className={classNames({
-                [styles.active]: pageNumber === current_page,
-                [styles.disabled]: pageNumber === current_page,
-              })}>
+              href={{ pathname: '', query: { page: pageNumber, per_page } }}
+              className={classNames(
+                pageNumber === current_page && [styles.active, styles.disabled],
+              )}>
               {pageNumber}
             </Link>
           ),
         )}
 
         <Link
-          href={`?page=${current_page + 1}&per_page=${per_page}`}
-          // className={current_page === last_page ? styles.disabled : ''}
+          href={{ pathname: '', query: { page: current_page + 1, per_page } }}
           className={classNames({
             [styles.disabled]: current_page === last_page,
           })}>

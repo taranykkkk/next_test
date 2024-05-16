@@ -2,9 +2,7 @@ import styles from './DeleteButton.module.scss';
 
 function DeleteButton({ postId, onDelete }) {
   return (
-    <button
-      className={styles.delete_button}
-      onClick={(e) => onDelete(e, postId)}>
+    <button className={styles.delete_button} onClick={() => onDelete(postId)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
