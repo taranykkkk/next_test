@@ -1,5 +1,5 @@
 import styles from './Posts.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Pagination from '@/components/Pagination/Pagination';
 import PostList from '@/components/PostList/PostList';
@@ -9,14 +9,16 @@ function PostsPage({ postsArray = [], query, metaData }) {
 
   const [posts, setPosts] = useState(postsArray);
   const [searchValue, setSearchValue] = useState(query.search);
-  const [currentPage, setCurrentPage] = useState(metaData.current_page);
+  const [metaDataState, setMetaDataState] = useState(metaData);
 
   async function filteredPosts() {
+    const url = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
+    const params = { search: searchValue };
+    url.search = new URLSearchParams(params).toString();
+
     try {
       if (searchValue.length > 0) {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}?search=${searchValue}`,
-        );
+        const res = await fetch(url);
 
         const dataPosts = await res.json();
         router.push({ pathname: 'posts', query: { search: searchValue } });
@@ -29,36 +31,56 @@ function PostsPage({ postsArray = [], query, metaData }) {
 
   async function previewPost(value) {
     try {
-      router.push(`?page=${metaData.current_page}&per_page=${value}`);
+      router.push({ query: { page: metaData.current_page, per_page: value } });
     } catch (error) {
       console.log(error);
     }
   }
 
   async function handleShowMore() {
-    const page = currentPage;
+    const page = metaDataState.current_page;
     const page_last = metaData.last_page;
     const per_page = metaData.per_page;
 
+    const url = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
+    const params = { page: page + 1, per_page };
+    url.search = new URLSearchParams(params).toString;
+
     try {
       if (page < page_last) {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}?page=${
-            page + 1
-          }&per_page=${per_page}`,
-        );
+        const res = await fetch(url);
         const data = await res.json();
         const showMoreData = data.data;
-        router.push(`?page=${page + 1}&per_page=${per_page}`, undefined, {
+
+        router.push({ query: { page: page + 1, per_page } }, undefined, {
           shallow: true,
         });
-        setCurrentPage((prev) => prev + 1);
+        setMetaDataState((prev) => ({
+          ...prev,
+          current_page: prev.current_page + 1,
+        }));
         setPosts((prev) => [...prev, ...showMoreData]);
       }
     } catch (error) {
       console.log(error);
     }
   }
+
+  async function handleDeletePost(e, id) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${id}`, {
+      method: 'DELETE',
+    });
+    setPosts((prev) => prev.filter((elem) => elem.id !== id));
+    setMetaDataState((prev) => ({ ...prev, total: metaData.total - 1 }));
+  }
+
+  useEffect(() => {
+    setPosts(postsArray);
+    setMetaDataState((prev) => ({
+      ...prev,
+      current_page: metaData.current_page,
+    }));
+  }, [metaData.current_page, postsArray]);
 
   return (
     <div className={styles.posts_container}>
@@ -77,9 +99,9 @@ function PostsPage({ postsArray = [], query, metaData }) {
       </div>
 
       <div className={styles.post_list}>
-        <PostList posts={posts} setPosts={setPosts} />
+        <PostList posts={posts} onDelete={handleDeletePost} />
       </div>
-      {metaData.last_page !== currentPage && (
+      {metaData.last_page !== metaDataState.current_page && (
         <div className={styles.show_more}>
           <button onClick={handleShowMore}>Show more</button>
         </div>
@@ -87,30 +109,36 @@ function PostsPage({ postsArray = [], query, metaData }) {
       <Pagination
         handleSelect={previewPost}
         metaData={metaData}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        metaDataState={metaDataState}
       />
     </div>
   );
 }
 
 export async function getServerSideProps({ query }) {
-  const page = query.page ? query.page : '1';
-  const per_page = query.per_page ? query.per_page : '5';
+  const page = query.page ? query.page : 1;
+  const per_page = query.per_page ? query.per_page : 5;
   const search = query.search ? query.search : '';
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}?page=${page}&per_page=${per_page}&search=${search}`,
-    );
+    const url = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
+    const params = { page, per_page, search };
+    url.search = new URLSearchParams(params).toString();
+
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BACKEND_URL}?page=${page}&per_page=${per_page}&search=${search}`,
+    // );
+    const res = await fetch(url);
 
     const data = await res.json();
+
     const last_page = data.last_page;
-    if (data.last_page < page || data.per_page < per_page) {
-      console.log(page);
+    const maxPerPage = 15;
+
+    if (data.last_page < page || maxPerPage < per_page) {
       return {
         redirect: {
-          destination: `?page=${last_page}&per_page=5`,
+          destination: `?page=${last_page}&per_page=${maxPerPage}`,
           permanent: false,
         },
       };
@@ -129,7 +157,6 @@ export async function getServerSideProps({ query }) {
         postsArray,
         query,
         metaData,
-        // key: data.current_page,
       },
     };
   } catch (error) {

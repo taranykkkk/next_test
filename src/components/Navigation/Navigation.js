@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './Navigation.module.scss';
 import { useRouter } from 'next/router';
+import classNames from 'classnames';
 
 const navBar = [
   { name: 'Home', pathname: '/' },
@@ -17,7 +18,9 @@ function Navigation() {
         {navBar.map((elem) => (
           <li
             key={elem.name}
-            className={pathname === elem.pathname ? styles.active : ''}>
+            className={classNames({
+              [styles.active]: pathname === elem.pathname,
+            })}>
             <Link href={elem.pathname}>{elem.name}</Link>
           </li>
         ))}

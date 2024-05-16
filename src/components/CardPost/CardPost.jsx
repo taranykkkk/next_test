@@ -11,7 +11,7 @@ function CardPost({
   body,
   image_path,
   id,
-  setPosts,
+  onDelete,
 }) {
   return (
     <div className={styles.card_post}>
@@ -29,7 +29,7 @@ function CardPost({
         <h5>{short_description}</h5>
         <p>{body}</p>
         <RedactButton pathname={`/posts/${id}/redact_post`} />
-        <DeleteButton postId={id} setPosts={setPosts} />
+        <DeleteButton postId={id} onDelete={onDelete} />
       </div>
     </div>
   );

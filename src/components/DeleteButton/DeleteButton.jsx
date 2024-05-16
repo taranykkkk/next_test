@@ -1,17 +1,10 @@
 import styles from './DeleteButton.module.scss';
 
-function DeleteButton({ postId, setPosts }) {
-  const handleDeletePost = async (e, id) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${id}`, {
-      method: 'DELETE',
-    });
-    setPosts((prev) => prev.filter((elem) => elem.id !== id));
-  };
-
+function DeleteButton({ postId, onDelete }) {
   return (
     <button
       className={styles.delete_button}
-      onClick={(e) => handleDeletePost(e, postId)}>
+      onClick={(e) => onDelete(e, postId)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
