@@ -1,0 +1,72 @@
+.pagination_container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+
+  a {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: none;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+  }
+  .active {
+    background-color: #8f9394;
+    color: black;
+    font-weight: bold;
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .total {
+    background-color: black;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+  }
+
+  .custom_select {
+    position: relative;
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 100%;
+      font-size: 18px;
+      padding: 5px 20px 5px 10px;
+      background-color: black;
+      border: 1px solid #c4d1eb;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      outline: none;
+      box-shadow: 3px 3px 2px 0px #e2e2e2;
+
+      &:focus {
+        background: black;
+        border: 2px solid #8f9394;
+        border-radius: 5px;
+      }
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      top: 50%;
+      right: 5px;
+      transform: translate(0, -50%);
+      width: 12px;
+      height: 12px;
+      background-color: white;
+      clip-path: polygon(50% 80%, 0 20%, 100% 20%);
+    }
+  }
+}
