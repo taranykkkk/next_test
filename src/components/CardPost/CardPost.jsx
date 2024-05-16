@@ -23,12 +23,14 @@ function CardPost({
       />
 
       <div className={styles.post_text}>
-        <Link href={`/posts/${id}`}>
+        <Link href={{ pathname: '/posts/[id]', query: { id } }}>
           <h3>{title}</h3>
         </Link>
         <h5>{short_description}</h5>
         <p>{body}</p>
-        <RedactButton pathname={`/posts/${id}/redact_post`} />
+        <RedactButton
+          pathname={{ pathname: '/posts/[id]/redact_post', query: { id } }}
+        />
         <DeleteButton postId={id} onDelete={onDelete} />
       </div>
     </div>

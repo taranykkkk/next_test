@@ -1,33 +1,33 @@
 import styles from './Posts.module.scss';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Pagination from '@/components/Pagination/Pagination';
 import PostList from '@/components/PostList/PostList';
+import SearchBar from '@/components/SearchBar/SearchBar';
 
 function PostsPage({ postsArray = [], query, metaData }) {
   const router = useRouter();
 
   const [posts, setPosts] = useState(postsArray);
-  const [searchValue, setSearchValue] = useState(query.search);
   const [metaDataState, setMetaDataState] = useState(metaData);
 
-  async function filteredPosts() {
+  const filteredPosts = useCallback(async (searchState) => {
     const url = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
-    const params = { search: searchValue };
+    const params = { search: searchState };
     url.search = new URLSearchParams(params).toString();
 
     try {
-      if (searchValue.length > 0) {
+      if (searchState.length > 0) {
         const res = await fetch(url);
 
         const dataPosts = await res.json();
-        router.push({ pathname: 'posts', query: { search: searchValue } });
+        router.push({ pathname: 'posts', query: { search: searchState } });
         setPosts(dataPosts.data);
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  }, []);
 
   async function previewPost(value) {
     try {
@@ -37,7 +37,7 @@ function PostsPage({ postsArray = [], query, metaData }) {
     }
   }
 
-  async function handleShowMore() {
+  const handleShowMore = useCallback(async () => {
     const page = metaDataState.current_page;
     const page_last = metaData.last_page;
     const per_page = metaData.per_page;
@@ -64,39 +64,32 @@ function PostsPage({ postsArray = [], query, metaData }) {
     } catch (error) {
       console.log(error);
     }
-  }
+  }, [metaDataState, metaData]);
 
-  async function handleDeletePost(e, id) {
+  const handleDeletePost = useCallback(async (id) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${id}`, {
       method: 'DELETE',
     });
     setPosts((prev) => prev.filter((elem) => elem.id !== id));
-    setMetaDataState((prev) => ({ ...prev, total: metaData.total - 1 }));
-  }
+    setMetaDataState(metaData);
+    router.push({
+      pathname: '',
+      query: { page: metaData.last_page - 1, per_page: metaData.per_page },
+    });
+  }, []);
 
   useEffect(() => {
     setPosts(postsArray);
-    setMetaDataState((prev) => ({
-      ...prev,
-      current_page: metaData.current_page,
-    }));
-  }, [metaData.current_page, postsArray]);
+  }, [postsArray]);
+
+  useEffect(() => {
+    setMetaDataState(metaData);
+  }, [metaData, postsArray]);
 
   return (
     <div className={styles.posts_container}>
       <h1>Posts</h1>
-      <div className={styles.search_container}>
-        <div className={styles.search_bar}>
-          <input
-            placeholder="Search post..."
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-          <button disabled={!searchValue} onClick={filteredPosts}>
-            Search
-          </button>
-        </div>
-      </div>
+      <SearchBar query={query} onSearchClick={filteredPosts} />
 
       <div className={styles.post_list}>
         <PostList posts={posts} onDelete={handleDeletePost} />
@@ -125,9 +118,6 @@ export async function getServerSideProps({ query }) {
     const params = { page, per_page, search };
     url.search = new URLSearchParams(params).toString();
 
-    // const res = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BACKEND_URL}?page=${page}&per_page=${per_page}&search=${search}`,
-    // );
     const res = await fetch(url);
 
     const data = await res.json();
