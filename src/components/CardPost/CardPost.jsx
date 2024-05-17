@@ -4,6 +4,7 @@ import RedactButton from '../RedactButton/RedactButton';
 import DeleteButton from '../DeleteButton/DeleteButton';
 import Link from 'next/link';
 import img from '../../../public/no_img.png';
+import classNames from 'classnames';
 
 function CardPost({
   title,
@@ -12,15 +13,18 @@ function CardPost({
   image_path,
   id,
   onDelete,
+  isViewed,
 }) {
   return (
-    <div className={styles.card_post}>
+    <div
+      className={classNames(styles.card_post, { [styles.viewed]: isViewed })}>
       <Image
         src={image_path ? image_path : img}
         width={480}
         height={260}
         alt={title}
       />
+      <div className={classNames({ [styles.viewed]: isViewed })}></div>
 
       <div className={styles.post_text}>
         <Link href={{ pathname: '/posts/[id]', query: { id } }}>
@@ -33,6 +37,11 @@ function CardPost({
         />
         <DeleteButton postId={id} onDelete={onDelete} />
       </div>
+      {isViewed && (
+        <div className={classNames({ [styles.viewed_text]: isViewed })}>
+          Viewed
+        </div>
+      )}
     </div>
   );
 }
