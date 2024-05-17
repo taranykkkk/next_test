@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styles from './SearchBar.module.scss';
 
-function SearchBar({ query, onSearchClick }) {
-  const [searchValue, setSearchValue] = useState(query.search);
+function SearchBar({ search, onSearchClick }) {
+  const [searchValue, setSearchValue] = useState(search);
 
   return (
     <div className={styles.search_container}>

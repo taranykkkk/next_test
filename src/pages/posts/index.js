@@ -11,17 +11,17 @@ function PostsPage({ postsArray = [], query, metaData }) {
   const [posts, setPosts] = useState(postsArray);
   const [metaDataState, setMetaDataState] = useState(metaData);
 
-  const filteredPosts = useCallback(async (searchState) => {
+  const filteredPosts = useCallback(async (search) => {
     const url = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
-    const params = { search: searchState };
+    const params = { search };
     url.search = new URLSearchParams(params).toString();
 
     try {
-      if (searchState.length > 0) {
+      if (search) {
         const res = await fetch(url);
 
         const dataPosts = await res.json();
-        router.push({ pathname: 'posts', query: { search: searchState } });
+        router.push({ pathname: 'posts', query: { search } });
         setPosts(dataPosts.data);
       }
     } catch (error) {
@@ -44,14 +44,15 @@ function PostsPage({ postsArray = [], query, metaData }) {
 
     const url = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
     const params = { page: page + 1, per_page };
-    url.search = new URLSearchParams(params).toString;
+    url.search = new URLSearchParams(params).toString();
 
     try {
       if (page < page_last) {
         const res = await fetch(url);
         const data = await res.json();
-        const showMoreData = data.data;
 
+        const showMoreData = data.data;
+        console.log(showMoreData);
         router.push({ query: { page: page + 1, per_page } }, undefined, {
           shallow: true,
         });
@@ -84,12 +85,12 @@ function PostsPage({ postsArray = [], query, metaData }) {
 
   useEffect(() => {
     setMetaDataState(metaData);
-  }, [metaData, postsArray]);
+  }, [metaData]);
 
   return (
     <div className={styles.posts_container}>
       <h1>Posts</h1>
-      <SearchBar query={query} onSearchClick={filteredPosts} />
+      <SearchBar search={query.search} onSearchClick={filteredPosts} />
 
       <div className={styles.post_list}>
         <PostList posts={posts} onDelete={handleDeletePost} />
