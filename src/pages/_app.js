@@ -1,3 +1,4 @@
+import Cookie from '@/components/Cookie/Cookie';
 import Navigation from '@/components/Navigation/Navigation';
 import '@/styles/globals.css';
 
@@ -8,6 +9,7 @@ export default function App({ Component, pageProps }) {
       <main>
         <Component {...pageProps} />
       </main>
+      <Cookie />
     </>
   );
 }
