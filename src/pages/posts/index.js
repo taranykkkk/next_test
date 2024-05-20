@@ -52,7 +52,7 @@ function PostsPage({ postsArray = [], query, metaData }) {
         const data = await res.json();
 
         const showMoreData = data.data;
-        console.log(showMoreData);
+
         router.push({ query: { page: page + 1, per_page } }, undefined, {
           shallow: true,
         });
@@ -67,17 +67,24 @@ function PostsPage({ postsArray = [], query, metaData }) {
     }
   }, [metaDataState, metaData]);
 
-  const handleDeletePost = useCallback(async (id) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${id}`, {
-      method: 'DELETE',
-    });
-    setPosts((prev) => prev.filter((elem) => elem.id !== id));
-    setMetaDataState(metaData);
-    router.push({
-      pathname: '',
-      query: { page: metaData.last_page - 1, per_page: metaData.per_page },
-    });
-  }, []);
+  const handleDeletePost = useCallback(
+    async (id) => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${id}`, {
+        method: 'DELETE',
+      });
+      setPosts((prev) => prev.filter((elem) => elem.id !== id));
+      setMetaDataState(metaData);
+
+      router.push({
+        pathname: '',
+        query: {
+          page: metaDataState.current_page,
+          per_page: metaDataState.per_page,
+        },
+      });
+    },
+    [posts],
+  );
 
   useEffect(() => {
     setPosts(postsArray);
@@ -129,7 +136,9 @@ export async function getServerSideProps({ query }) {
     if (data.last_page < page || maxPerPage < per_page) {
       return {
         redirect: {
-          destination: `?page=${last_page}&per_page=${maxPerPage}`,
+          destination: `?page=${last_page}&per_page=${
+            per_page > maxPerPage ? maxPerPage : per_page
+          }`,
           permanent: false,
         },
       };

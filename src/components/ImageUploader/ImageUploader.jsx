@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import styles from './ImageUploader.module.scss';
 
-function ImageUploader({ onChange, imageValue }) {
+// function ImageUploader({ onChange, imageValue }) {
+function ImageUploader({ register, imageValue, setValue }) {
   const [image, setImage] = useState(imageValue);
 
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
-
     if (selectedImage) {
       const reader = new FileReader();
 
       reader.onload = () => {
         setImage(reader.result);
-        onChange(selectedImage);
+        setValue('image', selectedImage);
       };
       reader.readAsDataURL(selectedImage);
     }
@@ -20,7 +20,7 @@ function ImageUploader({ onChange, imageValue }) {
 
   const handleDeleteImg = () => {
     setImage(null);
-    onChange('');
+    setValue('image', '');
   };
 
   return (
@@ -29,7 +29,12 @@ function ImageUploader({ onChange, imageValue }) {
       <input
         type="file"
         accept="image/*"
-        onChange={handleImageChange}
+        // {...register, {
+        //   onChange:(e) => handleImageChange(e),
+        // }}
+        {...register('image', {
+          onChange: (e) => handleImageChange(e),
+        })}
         id="imageInput"
       />
       <div>

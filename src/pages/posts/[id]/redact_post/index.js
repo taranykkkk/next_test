@@ -1,7 +1,11 @@
 import PostForm from '@/components/PostForm/PostForm';
+import dynamic from 'next/dynamic';
+
+const TestForm = dynamic(() => import('@/components/TestForm/TestForm'));
 
 function RedactPostPage({ post }) {
-  return <PostForm namePage="Redact post" redactValue={post} />;
+  return <TestForm namePage="Redact post" redactValue={post} />;
+  // <PostForm namePage="Redact post" redactValue={post} />;
 }
 
 export async function getServerSideProps({ params }) {
