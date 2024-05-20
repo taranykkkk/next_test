@@ -13,5 +13,9 @@
     &:hover {
       color: #8f9394;
     }
+
+    &:disabled {
+      opacity: 0.5;
+    }
   }
 }

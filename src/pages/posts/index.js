@@ -70,19 +70,26 @@ function PostsPage({ postsArray = [], query, metaData }) {
 
   const handleDeletePost = useCallback(
     async (id) => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${id}`, {
-        method: 'DELETE',
-      });
-      setPosts((prev) => prev.filter((elem) => elem.id !== id));
-      setMetaDataState(metaData);
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/${id}`,
+          {
+            method: 'DELETE',
+          },
+        );
+        setPosts((prev) => prev.filter((elem) => elem.id !== id));
+        setMetaDataState(metaData);
 
-      router.push({
-        pathname: '',
-        query: {
-          page: metaDataState.current_page,
-          per_page: metaDataState.per_page,
-        },
-      });
+        router.push({
+          pathname: '',
+          query: {
+            page: metaDataState.current_page,
+            per_page: metaDataState.per_page,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     [posts],
   );
