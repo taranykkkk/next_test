@@ -1,19 +1,20 @@
-import { useForm } from 'react-hook-form';
-import styles from './TestForm.module.scss';
+import { useForm, Controller } from 'react-hook-form';
+import styles from './FormPost.module.scss';
 import { useRouter } from 'next/router';
 import InputField from '../InputField/InputField';
 import ImageUploader from '../ImageUploader/ImageUploader';
 import TextEditor from '../TextEditor/TextEditor';
 
-function TestForm({ namePage, redactValue }) {
-  const { register, handleSubmit, formState, setValue, getValues } = useForm({
-    defaultValues: redactValue || {
-      title: '',
-      short_description: '',
-      body: '',
-      image: '',
-    },
-  });
+function FormPost({ namePage, redactValue }) {
+  const { register, handleSubmit, formState, setValue, getValues, control } =
+    useForm({
+      defaultValues: redactValue || {
+        title: '',
+        short_description: '',
+        body: '',
+        image: '',
+      },
+    });
   const router = useRouter();
 
   const onSubmit = async (data) => {
@@ -60,12 +61,18 @@ function TestForm({ namePage, redactValue }) {
           register={register('short_description')}
           text="Description"
         />
-
-        <ImageUploader
-          register={register}
-          imageValue={getValues('image')}
-          setValue={setValue}
+        <Controller
+          control={control}
+          name="ImageUploader"
+          render={() => (
+            <ImageUploader
+              register={register('image')}
+              imageValue={getValues('image')}
+              setValue={setValue}
+            />
+          )}
         />
+
         <TextEditor
           value={formState.defaultValues.body}
           register={register('body')}
@@ -78,4 +85,4 @@ function TestForm({ namePage, redactValue }) {
   );
 }
 
-export default TestForm;
+export default FormPost;

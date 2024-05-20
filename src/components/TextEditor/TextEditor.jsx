@@ -1,6 +1,5 @@
 import styles from './TextEditor.module.scss';
 
-// function TextEditor({ value, onChange }) {
 function TextEditor({ value, register }) {
   return (
     <div className={styles.text_editor}>

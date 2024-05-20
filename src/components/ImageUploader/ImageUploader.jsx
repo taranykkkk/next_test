@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styles from './ImageUploader.module.scss';
 
-// function ImageUploader({ onChange, imageValue }) {
 function ImageUploader({ register, imageValue, setValue }) {
   const [image, setImage] = useState(imageValue);
 
@@ -29,12 +28,8 @@ function ImageUploader({ register, imageValue, setValue }) {
       <input
         type="file"
         accept="image/*"
-        // {...register, {
-        //   onChange:(e) => handleImageChange(e),
-        // }}
-        {...register('image', {
-          onChange: (e) => handleImageChange(e),
-        })}
+        {...register}
+        onChange={(e) => handleImageChange(e)}
         id="imageInput"
       />
       <div>

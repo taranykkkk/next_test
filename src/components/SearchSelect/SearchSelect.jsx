@@ -9,24 +9,17 @@ const MyAsyncSelect = ({ onSearchClick }) => {
   const [inputSearchValue, setInputSearchValue] = useState('');
   const router = useRouter();
 
-  const loadOptions = async (inputValue, callback) => {
+  const loadOptions = async (inputValue) => {
     try {
       setInputSearchValue(inputValue);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/search?q=${inputValue}`,
       );
-      const data = await response.json();
 
-      const options = data.map((item) => ({
-        value: item.value,
-        label: item.label,
-      }));
-
-      callback(options);
+      return response.json();
     } catch (error) {
       console.error('Error fetching data: ', error);
-      callback([]);
     }
   };
 
@@ -47,6 +40,7 @@ const MyAsyncSelect = ({ onSearchClick }) => {
       />
       <button
         className={styles.search_button}
+        disabled={!inputSearchValue}
         onClick={() => onSearchClick(inputSearchValue)}>
         Search
       </button>
