@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import styles from './SearchSelect.module.scss';
 import style from './AsyncSelectStyle';
-import debounce from 'lodash.debounce';
+import debounce from '@/utils/debounce';
 
 const MyAsyncSelect = ({ onSearchClick }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -17,7 +17,6 @@ const MyAsyncSelect = ({ onSearchClick }) => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/search?q=${inputValue}`,
       );
-
       return response.json();
     } catch (error) {
       console.error('Error fetching data: ', error);
@@ -36,7 +35,6 @@ const MyAsyncSelect = ({ onSearchClick }) => {
   return (
     <div className={styles.search_select_container}>
       <AsyncSelect
-        // loadOptions={loadOptions}
         loadOptions={debounceFn}
         onChange={handleChange}
         value={selectedOption}
