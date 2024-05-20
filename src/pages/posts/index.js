@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Pagination from '@/components/Pagination/Pagination';
 import PostList from '@/components/PostList/PostList';
 import SearchBar from '@/components/SearchBar/SearchBar';
+import MyAsyncSelect from '@/components/SearchSelect/SearchSelect';
 
 function PostsPage({ postsArray = [], query, metaData }) {
   const router = useRouter();
@@ -97,7 +98,8 @@ function PostsPage({ postsArray = [], query, metaData }) {
   return (
     <div className={styles.posts_container}>
       <h1>Posts</h1>
-      <SearchBar search={query.search} onSearchClick={filteredPosts} />
+      {/* <SearchBar search={query.search} onSearchClick={filteredPosts} /> */}
+      <MyAsyncSelect onSearchClick={filteredPosts} />
 
       <div className={styles.post_list}>
         <PostList posts={posts} onDelete={handleDeletePost} />

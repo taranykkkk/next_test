@@ -12,6 +12,7 @@ function SearchBar({ search, onSearchClick }) {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
+
         <button
           disabled={!searchValue}
           onClick={() => onSearchClick(searchValue)}>
