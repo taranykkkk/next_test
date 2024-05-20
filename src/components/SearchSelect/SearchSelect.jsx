@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import styles from './SearchSelect.module.scss';
 import style from './AsyncSelectStyle';
+import debounce from 'lodash.debounce';
 
 const MyAsyncSelect = ({ onSearchClick }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -23,6 +24,8 @@ const MyAsyncSelect = ({ onSearchClick }) => {
     }
   };
 
+  const debounceFn = useCallback(debounce(loadOptions, 250), []);
+
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
     if (selectedOption) {
@@ -33,7 +36,8 @@ const MyAsyncSelect = ({ onSearchClick }) => {
   return (
     <div className={styles.search_select_container}>
       <AsyncSelect
-        loadOptions={loadOptions}
+        // loadOptions={loadOptions}
+        loadOptions={debounceFn}
         onChange={handleChange}
         value={selectedOption}
         styles={style}
