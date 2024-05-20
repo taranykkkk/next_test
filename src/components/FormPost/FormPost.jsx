@@ -6,15 +6,14 @@ import ImageUploader from '../ImageUploader/ImageUploader';
 import TextEditor from '../TextEditor/TextEditor';
 
 function FormPost({ namePage, redactValue }) {
-  const { register, handleSubmit, formState, setValue, getValues, control } =
-    useForm({
-      defaultValues: redactValue || {
-        title: '',
-        short_description: '',
-        body: '',
-        image: '',
-      },
-    });
+  const { register, handleSubmit, formState, control } = useForm({
+    defaultValues: redactValue || {
+      title: '',
+      short_description: '',
+      body: '',
+      image: '',
+    },
+  });
   const router = useRouter();
 
   const onSubmit = async (data) => {
@@ -49,7 +48,6 @@ function FormPost({ namePage, redactValue }) {
       console.error('Error:', error);
     }
   };
-
   return (
     <div className={styles.container}>
       <h1>{namePage}</h1>
@@ -63,14 +61,10 @@ function FormPost({ namePage, redactValue }) {
         />
         <Controller
           control={control}
-          name="ImageUploader"
-          render={() => (
-            <ImageUploader
-              register={register('image')}
-              imageValue={getValues('image')}
-              setValue={setValue}
-            />
-          )}
+          name="image"
+          render={({ field: { onChange, value } }) => {
+            return <ImageUploader imageValue={value} onChange={onChange} />;
+          }}
         />
 
         <TextEditor
