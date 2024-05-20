@@ -1,10 +1,26 @@
 import styles from './CookieModal.module.scss';
 import img from '../../../public/cookies.svg';
 import Image from 'next/image';
+import { hasCookie, setCookie } from 'cookies-next';
+import { useEffect, useState } from 'react';
 
-function CookieModal({ isSuccess, handleModal }) {
+function CookieModal() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const onAction = (boolean) => {
+    if (boolean) {
+      setCookie('key', 'coooooookiessss');
+    }
+    setModalIsOpen(false);
+  };
+
+  useEffect(() => {
+    if (!hasCookie('key')) {
+      setModalIsOpen(true);
+    }
+  }, []);
   return (
-    <dialog open={isSuccess} className={styles.cookie_modal}>
+    <dialog open={modalIsOpen} className={styles.cookie_modal}>
       <div className={styles.cookie_text}>
         <div className={styles.cookie_title_container}>
           <Image src={img} width={30} alt="cookie" />
@@ -19,14 +35,10 @@ function CookieModal({ isSuccess, handleModal }) {
       </div>
       <hr />
       <div className={styles.actions_buttons}>
-        <button
-          className={styles.accept}
-          onClick={(e) => handleModal(e.target.innerText)}>
+        <button className={styles.accept} onClick={() => onAction(true)}>
           Accept all
         </button>
-        <button
-          className={styles.reject}
-          onClick={(e) => handleModal(e.target.innerText)}>
+        <button className={styles.reject} onClick={() => onAction(false)}>
           Reject all
         </button>
       </div>

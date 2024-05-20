@@ -1,0 +1,17 @@
+.search_select_container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+
+  .search_button {
+    background-color: black;
+    color: white;
+    padding: 6px 20px;
+    border-radius: 10px;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: #8f9394;
+    }
+  }
+}
