@@ -4,11 +4,18 @@ import AsyncSelect from 'react-select/async';
 import styles from './SearchSelect.module.scss';
 import style from './AsyncSelectStyle';
 import debounce from '@/utils/debounce';
+import SearchBtn from '../SearchBtn/SearchBtn';
 
-const MyAsyncSelect = ({ onSearchClick }) => {
+const MyAsyncSelect = ({ isLoading, onSearchClick }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [inputSearchValue, setInputSearchValue] = useState('');
   const router = useRouter();
+
+  const handleClickSearch = () => {
+    if (!!inputSearchValue) {
+      onSearchClick(inputSearchValue);
+    }
+  };
 
   const loadOptions = async (inputValue) => {
     try {
@@ -40,12 +47,8 @@ const MyAsyncSelect = ({ onSearchClick }) => {
         value={selectedOption}
         styles={style}
       />
-      <button
-        className={styles.search_button}
-        disabled={!inputSearchValue}
-        onClick={() => onSearchClick(inputSearchValue)}>
-        Search
-      </button>
+
+      <SearchBtn onClick={handleClickSearch} isLoading={isLoading} />
     </div>
   );
 };
