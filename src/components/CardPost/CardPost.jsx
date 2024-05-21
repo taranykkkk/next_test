@@ -26,7 +26,10 @@ function CardPost({
       />
       <div className={classNames({ [styles.viewed]: isViewed })}></div>
 
-      <div className={styles.post_text}>
+      <div
+        className={classNames(styles.post_text, {
+          [styles.viewed_link]: isViewed,
+        })}>
         <Link href={{ pathname: '/posts/[id]', query: { id } }}>
           <h3>{title}</h3>
         </Link>
