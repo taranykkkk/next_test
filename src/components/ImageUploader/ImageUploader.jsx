@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import styles from './ImageUploader.module.scss';
 
 function ImageUploader({ imageValue, onChange }) {
   const [image, setImage] = useState(imageValue);
+
+  const id = useId();
 
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
@@ -28,11 +30,11 @@ function ImageUploader({ imageValue, onChange }) {
       <input
         type="file"
         accept="image/*"
-        onChange={(e) => handleImageChange(e)}
-        id="imageInput"
+        onChange={handleImageChange}
+        id={id}
       />
       <div>
-        <label htmlFor="imageInput">Added Image</label>
+        <label htmlFor={id}>Added Image</label>
         <button style={{ marginLeft: '10px' }} onClick={handleDeleteImg}>
           Delete Image
         </button>

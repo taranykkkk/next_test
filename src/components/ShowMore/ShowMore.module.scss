@@ -1,0 +1,29 @@
+.show_more {
+  margin: 60px 0;
+  text-align: center;
+
+  button {
+    border: 1px solid black;
+    padding: 7.5px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: #8f9394;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2px;
+  }
+
+  .disabled {
+    opacity: 0.6;
+  }
+}

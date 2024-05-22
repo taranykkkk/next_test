@@ -1,0 +1,15 @@
+.search_button {
+  background-color: black;
+  color: white;
+  padding: 7.5px 20px;
+  border-radius: 10px;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: #8f9394;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}

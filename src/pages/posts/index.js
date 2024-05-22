@@ -3,16 +3,22 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Pagination from '@/components/Pagination/Pagination';
 import PostList from '@/components/PostList/PostList';
-import SearchBar from '@/components/SearchBar/SearchBar';
 import MyAsyncSelect from '@/components/SearchSelect/SearchSelect';
+import ShowMore from '@/components/ShowMore/ShowMore';
+import withShowMore from '@/hoc/withLoadingState';
+
+const TestShowMore = withShowMore(ShowMore);
 
 function PostsPage({ postsArray = [], query, metaData }) {
   const router = useRouter();
 
   const [posts, setPosts] = useState(postsArray);
   const [metaDataState, setMetaDataState] = useState(metaData);
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
+  const [isLoadingShowMore, setIsLoadingShowMore] = useState(false);
 
   const filteredPosts = useCallback(async (search) => {
+    setIsLoadingSearch(true);
     const url = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
     const params = { search };
     url.search = new URLSearchParams(params).toString();
@@ -24,6 +30,7 @@ function PostsPage({ postsArray = [], query, metaData }) {
         const dataPosts = await res.json();
         router.push({ pathname: 'posts', query: { search } });
         setPosts(dataPosts.data);
+        setIsLoadingSearch(false);
       }
     } catch (error) {
       console.log(error);
@@ -48,6 +55,8 @@ function PostsPage({ postsArray = [], query, metaData }) {
     url.search = new URLSearchParams(params).toString();
 
     try {
+      setIsLoadingShowMore(true);
+
       if (page < page_last) {
         const res = await fetch(url);
         const data = await res.json();
@@ -63,6 +72,7 @@ function PostsPage({ postsArray = [], query, metaData }) {
         }));
         setPosts((prev) => [...prev, ...showMoreData]);
       }
+      setIsLoadingShowMore(false);
     } catch (error) {
       console.log(error);
     }
@@ -105,16 +115,19 @@ function PostsPage({ postsArray = [], query, metaData }) {
   return (
     <div className={styles.posts_container}>
       <h1>Posts</h1>
-      {/* <SearchBar search={query.search} onSearchClick={filteredPosts} /> */}
-      <MyAsyncSelect onSearchClick={filteredPosts} />
+      <MyAsyncSelect
+        onSearchClick={filteredPosts}
+        isLoading={isLoadingSearch}
+      />
 
       <div className={styles.post_list}>
         <PostList posts={posts} onDelete={handleDeletePost} />
       </div>
       {metaData.last_page !== metaDataState.current_page && (
-        <div className={styles.show_more}>
-          <button onClick={handleShowMore}>Show more</button>
-        </div>
+        <TestShowMore
+          handleShowMore={handleShowMore}
+          isLoading={isLoadingShowMore}
+        />
       )}
       <Pagination
         handleSelect={previewPost}
