@@ -2,4 +2,9 @@
   display: flex;
   align-items: center;
   margin-bottom: 40px;
+  gap: 20px;
+
+  @media (max-width: 710px) {
+    flex-direction: column;
+  }
 }

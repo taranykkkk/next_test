@@ -28,7 +28,9 @@ function PostsPage({ postsArray = [], query, metaData }) {
         const res = await fetch(url);
 
         const dataPosts = await res.json();
-        router.push({ pathname: 'posts', query: { search } });
+        router.push({ pathname: 'posts', query: { search } }, undefined, {
+          shallow: true,
+        });
         setPosts(dataPosts.data);
         setIsLoadingSearch(false);
       }

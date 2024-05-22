@@ -16,7 +16,7 @@ const Pagination = ({ handleSelect, metaData, metaDataState }) => {
     <div className={styles.pagination_container}>
       <div className={styles.total}>Total: {total}</div>
 
-      <div>
+      <div className={styles.pages}>
         <Link
           href={{ pathname: '', query: { page: current_page - 1, per_page } }}
           className={classNames({ [styles.disabled]: current_page === 1 })}>
