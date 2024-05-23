@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
 
   a {
     padding: 5px 10px;
@@ -47,7 +48,7 @@
       color: white;
       cursor: pointer;
       outline: none;
-      box-shadow: 3px 3px 2px 0px #e2e2e2;
+      order: 3;
 
       &:focus {
         background: black;

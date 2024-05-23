@@ -1,12 +1,15 @@
 const style = {
+  container: (base) => ({
+    ...base,
+    width: '100%',
+  }),
   control: (base) => ({
     ...base,
     border: 0,
     backgroundColor: 'black',
     boxShadow: 'none',
-    width: '500px',
-    marginRight: '20px',
     color: 'white',
+    width: '100%',
   }),
   input: (base) => ({
     ...base,
@@ -16,8 +19,6 @@ const style = {
     ...base,
     backgroundColor: 'black',
     color: 'white',
-    zIndex: 22,
-    maxWidth: '500px',
   }),
   option: (base, state) => ({
     ...base,

@@ -1,5 +1,5 @@
 .posts_container {
-  padding: 40px;
+  padding: clamp(15px, 0.547rem + 1.95vw, 40px);
   height: 100%;
 
   h1 {
@@ -59,21 +59,4 @@
     flex-direction: column;
     gap: 30px;
   }
-  // .show_more {
-  //   margin: 60px 0;
-  //   text-align: center;
-
-  //   button {
-  //     border: 1px solid black;
-  //     padding: 10px;
-  //     border-radius: 10px;
-  //     font-weight: bold;
-  //     background-color: #8f9394;
-  //     transition: color 0.2s ease-in-out;
-
-  //     &:hover {
-  //       color: white;
-  //     }
-  //   }
-  // }
 }
