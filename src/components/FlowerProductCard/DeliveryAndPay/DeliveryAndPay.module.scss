@@ -1,0 +1,40 @@
+@import '../variables/variables';
+
+.pay_list {
+  display: flex;
+  gap: 70px;
+  font-size: 18px;
+  margin-bottom: 65px;
+
+  h3 {
+    font-weight: 900;
+    line-height: 1.5;
+    color: $color-green-600;
+    min-width: 85px;
+  }
+
+  li {
+    list-style: none;
+    position: relative;
+    min-width: 440px;
+
+    &::before {
+      content: '\2022';
+      font-size: 50px;
+      position: absolute;
+      left: -28px;
+      top: -28px;
+      color: $color-green-600;
+    }
+
+    span {
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    p {
+      max-width: 360px;
+      font-weight: 300;
+    }
+  }
+}

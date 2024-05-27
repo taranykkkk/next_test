@@ -1,0 +1,60 @@
+@import '../variables/variables';
+
+.comments {
+  border: 1px solid $color-green-600;
+  max-width: 420px;
+  height: 200px;
+  padding: 26px 30px;
+  border-radius: 10px;
+  margin-bottom: 23px;
+  position: relative;
+  width: 100%;
+
+  .comments_title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    p {
+      font-weight: 400;
+
+      span {
+        font-weight: 700;
+      }
+    }
+  }
+
+  p {
+    font-weight: 300;
+    font-size: 16px;
+  }
+}
+.prev_btn {
+  border: 1px solid $color-green-600;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  background-color: $color-white;
+}
+
+.next_btn {
+  border: 1px solid $color-green-600;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  background-color: $color-white;
+}

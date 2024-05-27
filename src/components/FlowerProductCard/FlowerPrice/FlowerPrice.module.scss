@@ -1,0 +1,19 @@
+@import '../variables/variables';
+
+.flower_price {
+  display: flex;
+  flex-direction: column;
+
+  .flower_new_price {
+    font-size: 40px;
+    color: $color-black-800;
+    font-weight: 400;
+  }
+
+  .flower_old_price {
+    font-size: 20px;
+    color: $color-red;
+    font-weight: 400;
+    text-decoration: line-through;
+  }
+}
