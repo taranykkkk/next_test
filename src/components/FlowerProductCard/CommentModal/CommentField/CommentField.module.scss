@@ -1,0 +1,8 @@
+@import '../../variables/variables';
+
+.form_textarea {
+  border: 1px solid $color-black-800;
+  border-radius: 10px;
+  padding: 10px;
+  resize: none;
+}
