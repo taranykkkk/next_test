@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import './variables/variables';
+
+.flower_overview_container {
+  display: flex;
+  gap: 40px;
+  font-family: 'Nunito Sans', sans-serif;
+  margin-bottom: 90px;
+
+  .flower_image {
+    position: relative;
+
+    .flower_image_container {
+      max-width: 529px;
+      max-height: 380px;
+      overflow: hidden;
+      background-color: pink;
+
+      img {
+        object-fit: cover;
+      }
+    }
+
+    span {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 5px 10px;
+      border-radius: 100px;
+      background-color: $color-red;
+      font-size: 14px;
+      font-weight: 700;
+      color: $color-white;
+      line-height: 1.5;
+    }
+  }
+
+  .flower_description {
+  }
+
+  .flower_description_top {
+    display: flex;
+    gap: 54px;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .flower_available {
+      font-size: 18px;
+      color: $color-green-600;
+      font-weight: 900;
+      line-height: 1.5;
+    }
+
+    .flower_code {
+      font-size: 18px;
+      font-weight: 300;
+      color: $color-green-600;
+      line-height: 1.5;
+    }
+  }
+
+  .flower_description_middle {
+    h1 {
+      max-width: 460px;
+      font-size: 40px;
+      font-weight: 900;
+      color: $color-black-800;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .description_middle_container {
+      display: flex;
+      gap: 25px;
+      // justify-content: space-between;
+      line-height: 1;
+      margin-bottom: 30px;
+
+      button {
+        padding: 25px 60px;
+        border-radius: 100px;
+        background-color: $color-black-800;
+        color: $color-white;
+        font-size: 18px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .flower_description_bottom {
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-green-600;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    h5 {
+      width: 77px;
+    }
+
+    a {
+      border: 1px solid $color-green-600;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 400;
+      color: $color-black-800;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        color: $color-white;
+        background-color: $color-green-600;
+      }
+    }
+  }
+}

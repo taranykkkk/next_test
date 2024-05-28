@@ -1,0 +1,26 @@
+@import '../variables/variables';
+
+.flower_other_description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .flower_params {
+    display: flex;
+    gap: 25px;
+
+    div {
+      display: flex;
+      gap: 10px;
+    }
+
+    a {
+      padding: 2px 25px;
+    }
+
+    .active {
+      color: $color-white;
+      background-color: $color-green-600;
+    }
+  }
+}

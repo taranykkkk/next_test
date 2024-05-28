@@ -7,6 +7,7 @@ const navBar = [
   { name: 'Home', pathname: '/' },
   { name: 'Posts', pathname: '/posts' },
   { name: 'Create post', pathname: '/create_post' },
+  { name: 'Products', pathname: '/products' },
 ];
 
 function Navigation() {

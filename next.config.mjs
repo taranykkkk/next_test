@@ -7,6 +7,10 @@ const nextConfig = {
         protocol: process.env.PROTOCOL,
         hostname: process.env.HOSTNAME,
       },
+      {
+        protocol: 'https',
+        hostname: 'dev-api.millionflowers.com.ua',
+      },
     ],
   },
 };
