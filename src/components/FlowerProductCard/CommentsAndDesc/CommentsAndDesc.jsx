@@ -3,7 +3,7 @@ import styles from './CommentsAndDesc.module.scss';
 import CommentSlider from '../CommentSlider/CommentSlider';
 import classNames from 'classnames';
 
-function CommentsAndDesc({ description }) {
+function CommentsAndDesc({ description, handleOpenModal }) {
   return (
     <>
       <div className={styles.comments_and_desc}>
@@ -11,7 +11,9 @@ function CommentsAndDesc({ description }) {
           <h3 className={styles.comments_and_desc_title}>Відгуки</h3>
           <div className={styles.comment_wrapper}>
             <CommentSlider />
-            <button className={styles.comment_btn}>Залишити відгук</button>
+            <button className={styles.comment_btn} onClick={handleOpenModal}>
+              Залишити відгук
+            </button>
           </div>
         </div>
         {description && (

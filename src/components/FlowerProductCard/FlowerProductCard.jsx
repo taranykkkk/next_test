@@ -8,11 +8,24 @@ import CommentsAndDesc from './CommentsAndDesc/CommentsAndDesc';
 import { useState } from 'react';
 import ImageContainer from './ImageContainer/ImageContainer';
 import calcPrice from '@/utils/calcPrice';
+import CommentModal from './CommentModal/CommentModal';
+import { useClickAway } from '@uidotdev/usehooks';
 
 function FlowerProductCard({ productData }) {
   const { image, price, sku, name, description, slug } = productData;
 
   const [countFlower, setCountFlower] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const ref = useClickAway(() => {
+    setIsOpen(false);
+  });
+
+  const handleOpenModal = () => {
+    if (isOpen === false) {
+      setIsOpen(true);
+    }
+  };
 
   return (
     <div>
@@ -51,7 +64,11 @@ function FlowerProductCard({ productData }) {
       </div>
 
       <DeliveryAndPay />
-      <CommentsAndDesc description={description} />
+      <CommentsAndDesc
+        description={description}
+        handleOpenModal={handleOpenModal}
+      />
+      {isOpen && <CommentModal linkModal={ref} />}
     </div>
   );
 }
