@@ -13,20 +13,27 @@ export async function getServerSideProps({ query }) {
   const productPath = query.slug ? query.slug : '';
 
   try {
-    const url = new URL(
-      `https://dev-api.millionflowers.com.ua/cms/products/vn/${productPath}`,
-    );
+    const url = new URL(`${process.env.NEXT_PUBLIC_BACKEND_MF}/${productPath}`);
     const params = { size: defaultSize };
     url.search = new URLSearchParams(params).toString();
 
     const res = await fetch(url);
     const data = await res.json();
 
-    const { sizes, slug, images, price, size_slug, size_id, sku, name } =
-      data.product;
+    const {
+      sizes,
+      slug,
+      images,
+      price,
+      size_slug,
+      size_id,
+      sku,
+      name,
+      description,
+    } = data.product;
 
     const productData = {
-      sizes,
+      sizes: sizes.sort((a, b) => a.height - b.height),
       slug,
       defaultSize: size_slug,
       image: images[0].sizes.medium,
@@ -34,6 +41,7 @@ export async function getServerSideProps({ query }) {
       size_id,
       sku,
       name,
+      description,
     };
 
     return { props: { productData } };

@@ -3,6 +3,7 @@
 .flower_price {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   .flower_new_price {
     font-size: 40px;

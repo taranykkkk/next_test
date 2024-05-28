@@ -5,43 +5,19 @@ import ParametersProduct from './ParametersProduct/ParametersProduct';
 import FlowerPrice from './FlowerPrice/FlowerPrice';
 import DeliveryAndPay from './DeliveryAndPay/DeliveryAndPay';
 import CommentsAndDesc from './CommentsAndDesc/CommentsAndDesc';
-import Image from 'next/image';
 import { useState } from 'react';
+import ImageContainer from './ImageContainer/ImageContainer';
+import calcPrice from '@/utils/calcPrice';
 
 function FlowerProductCard({ productData }) {
-  const { image, price, sku, name } = productData;
+  const { image, price, sku, name, description, slug } = productData;
 
   const [countFlower, setCountFlower] = useState(1);
-
-  const calcPriceFlower = (count, price) => {
-    return (count / 100) * price;
-  };
 
   return (
     <div>
       <div className={styles.flower_overview_container}>
-        <div className={styles.flower_image}>
-          <div className={styles.flower_image_container}>
-            {image ? (
-              <Image src={image} width={572} height={800} alt="avalanc-t" />
-            ) : (
-              <div
-                style={{
-                  width: '572',
-                  height: '800',
-                  objectFit: 'cover',
-                  backgroundColor: 'pink',
-                }}></div>
-            )}
-          </div>
-          <span>Знижка</span>
-          <div
-            style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-            <div style={{ fontSize: '23px' }}>{'\u2022'}</div>
-            <div style={{ fontSize: '23px', color: 'gray' }}>{'\u2022'}</div>
-            <div style={{ fontSize: '23px', color: 'gray' }}>{'\u2022'}</div>
-          </div>
-        </div>
+        <ImageContainer image={image} alt={slug} />
 
         <div className={styles.flower_description}>
           <div className={styles.flower_description_top}>
@@ -51,13 +27,15 @@ function FlowerProductCard({ productData }) {
           </div>
 
           <div className={styles.flower_description_middle}>
-            <h1>{name}</h1>
+            <h1 className={styles.flower_product_name}>{name}</h1>
             <div className={styles.description_middle_container}>
               <FlowerPrice
-                newPrice={calcPriceFlower(countFlower, price)}
-                oldPrice={calcPriceFlower(countFlower, price)}
+                newPrice={calcPrice(countFlower, price)}
+                oldPrice={calcPrice(countFlower, 0)}
               />
-              <button>Додати до корзини</button>
+              <button className={styles.add_to_cart_btn}>
+                Додати до корзини
+              </button>
             </div>
           </div>
 
@@ -73,7 +51,7 @@ function FlowerProductCard({ productData }) {
       </div>
 
       <DeliveryAndPay />
-      <CommentsAndDesc />
+      <CommentsAndDesc description={description} />
     </div>
   );
 }

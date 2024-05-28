@@ -19,9 +19,9 @@ function ParametersProduct({ productData }) {
     <div className={styles.flower_other_description}>
       <div className={styles.flower_params}>
         <h5>{parametersProduct[0].title}</h5>
-        <div>
+        <div className={styles.flower_params_container}>
           {parametersProduct[0].parameters.map((param, i) => (
-            <Link href="/" key={i}>
+            <Link href="/" key={i} className={styles.flower_params_link}>
               {param}
             </Link>
           ))}
@@ -30,10 +30,10 @@ function ParametersProduct({ productData }) {
       {size_id && (
         <div className={styles.flower_params}>
           <h5>{parametersProduct[1].title}</h5>
-          <div>
+          <div className={styles.flower_params_container}>
             {sizes.map((param) => (
               <Link
-                className={classNames({
+                className={classNames(styles.flower_params_link, {
                   [styles.active]: param.slug === currentSize,
                 })}
                 href={`${slug}?size=${param.slug}`}
@@ -46,9 +46,9 @@ function ParametersProduct({ productData }) {
       )}
       <div className={styles.flower_params}>
         <h5>{parametersProduct[2].title}</h5>
-        <div>
+        <div className={styles.flower_params_container}>
           {parametersProduct[2].parameters.map((param, i) => (
-            <Link href="/" key={i}>
+            <Link href="/" key={i} className={styles.flower_params_link}>
               {param}
             </Link>
           ))}

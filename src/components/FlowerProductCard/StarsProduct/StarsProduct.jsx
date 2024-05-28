@@ -10,11 +10,13 @@ function StarsProduct({ rating }) {
       {Array(5)
         .fill('')
         .map((_, index) => {
-          if (index < rating) {
-            return <Image src={star_active} alt="star" key={index} />;
-          } else {
-            return <Image src={star_disabled} alt="star" key={index} />;
-          }
+          return (
+            <Image
+              src={index < rating ? star_active : star_disabled}
+              alt={`star-${index}`}
+              key={index}
+            />
+          );
         })}
     </div>
   );

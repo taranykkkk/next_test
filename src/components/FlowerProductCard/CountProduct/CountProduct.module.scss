@@ -5,15 +5,15 @@
   gap: 25px;
   align-items: center;
 
-  div {
-    span {
+  .flower_count_container {
+    .flower_count_value {
       font-size: 16px;
       font-weight: 400;
       color: $color-black-800;
       padding: 0 7px;
     }
 
-    button {
+    .flower_count_btn {
       width: 30px;
       height: 30px;
       border: 1px solid $color-green-600;
@@ -24,6 +24,6 @@
   }
 
   .disabled {
-    opacity: 0.7;
+    opacity: 0.4;
   }
 }
