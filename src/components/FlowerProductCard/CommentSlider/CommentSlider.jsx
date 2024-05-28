@@ -47,11 +47,12 @@ function CommentSlider() {
           <SwiperSlide key={comment.id}>
             <div className={styles.comments_title}>
               <StarsProduct rating={comment.rating} />
-              <p>
-                <span>{comment.user},</span> {comment.create_at}
+              <p className={styles.comments_user_desc}>
+                <span className={styles.user_name}>{comment.user},</span>{' '}
+                {comment.create_at}
               </p>
             </div>
-            <p>{comment.text}</p>
+            <p className={styles.comments_text}>{comment.text}</p>
           </SwiperSlide>
         ))}
       </Swiper>

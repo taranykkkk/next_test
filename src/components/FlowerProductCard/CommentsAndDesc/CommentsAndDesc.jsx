@@ -1,27 +1,31 @@
 import styles from './CommentsAndDesc.module.scss';
 
 import CommentSlider from '../CommentSlider/CommentSlider';
+import classNames from 'classnames';
 
-function CommentsAndDesc() {
+function CommentsAndDesc({ description }) {
   return (
     <>
       <div className={styles.comments_and_desc}>
         <div className={styles.comments_container}>
-          <h3>Відгуки</h3>
+          <h3 className={styles.comments_and_desc_title}>Відгуки</h3>
           <div className={styles.comment_wrapper}>
             <CommentSlider />
             <button className={styles.comment_btn}>Залишити відгук</button>
           </div>
         </div>
-        <div className={styles.description}>
-          <h3>Опис</h3>
-          <p>
-            Троянда преміум якості. Букет з української однобутонної троянди
-            білого кольору 101 шт 50 см в упакуванні. Зверніть увагу, що букет
-            може відрізнятись по формі та відтінку від того, що зображений на
-            фото, проте його склад залишається без змін
-          </p>
-        </div>
+        {description && (
+          <div className={styles.description}>
+            <h3
+              className={classNames(
+                styles.comments_and_desc_title,
+                styles.description_title_mb,
+              )}>
+              Опис
+            </h3>
+            <p className={styles.description_text}>{description}</p>
+          </div>
+        )}
       </div>
     </>
   );

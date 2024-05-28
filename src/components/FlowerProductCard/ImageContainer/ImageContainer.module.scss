@@ -1,0 +1,36 @@
+@import '../variables/variables';
+
+.flower_image {
+  position: relative;
+
+  .flower_image_container {
+    max-width: 529px;
+    max-height: 380px;
+    overflow: hidden;
+    background-color: pink;
+
+    img {
+      object-fit: cover;
+    }
+
+    .flower_image_alternative {
+      width: 572px;
+      height: 800px;
+      object-fit: cover;
+      background-color: pink;
+    }
+  }
+
+  .sale {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 5px 10px;
+    border-radius: 100px;
+    background-color: $color-red;
+    font-size: 14px;
+    font-weight: 700;
+    color: $color-white;
+    line-height: 1.5;
+  }
+}

@@ -14,8 +14,9 @@ function ProductsPage({ data }) {
       </h1>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-        {data.map((elem) => (
+        {data.map((elem, i) => (
           <div
+            key={i}
             style={{
               backgroundColor: 'pink',
               width: '100%',
@@ -36,9 +37,8 @@ function ProductsPage({ data }) {
 
 export async function getServerSideProps() {
   try {
-    const res = await fetch(
-      'https://dev-api.millionflowers.com.ua/cms/products/vn/',
-    );
+    const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_MF);
+
     const productsData = await res.json();
     const { data } = productsData;
 

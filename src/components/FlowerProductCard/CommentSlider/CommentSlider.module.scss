@@ -15,16 +15,16 @@
     justify-content: space-between;
     margin-bottom: 15px;
 
-    p {
+    .comments_user_desc {
       font-weight: 400;
 
-      span {
+      .user_name {
         font-weight: 700;
       }
     }
   }
 
-  p {
+  .comments_text {
     font-weight: 300;
     font-size: 16px;
   }
